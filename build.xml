@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<project name = "9472-Team4_C_MidAct02-Ant" basedir="." default="main">
+    <property name ="src.dir" value="src"/>
+    <property name ="build.dir" value="build"/>
+    <property name ="classes.dir" value="${build.dir}/classes"/>
+    <property name ="jar.dir" value="${build.dir}/jar"/>
+    <property name ="main-class" value="Main"/>
+
+    <!--This scenario is when we considered to compile all the source code-->
+    <!--This will clean the build directory-->
+    <target name ="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!--This will create a classes directory and compile all java files inside the src directory-->
+    <target name ="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
+    </target>
+
+    <!--After the compilation process this will be executed-->
+    <!--This creates the jar file with the compiled classes-->
+    <target name ="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!--After the creation of the jar file, it will run the jar file created-->
+    <target name ="run" depends ="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+    <!--This will clean the build directory and create a new jar file-->
+    <target name="clean-build" depends="clean,jar"/>
+
+    <!--This will clean the build directory, compile the java files, create a jar file and run the jar file-->
+    <target name="main" depends="clean,run"/>
+</project>
