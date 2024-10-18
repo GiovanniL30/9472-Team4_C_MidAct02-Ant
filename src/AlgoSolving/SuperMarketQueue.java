@@ -1,7 +1,13 @@
 package AlgoSolving;
 
 public class SuperMarketQueue {
-
+    public static void main(String[] args) {
+        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 3, 3, 4, 4}, 2));
+        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{5, 2, 3, 3, 4, 4}, 2));
+        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 5, 3, 3, 4, 4}, 3));
+        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 5, 3, 4, 5}, 3));
+        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 3, 3, 5, 4}, 30));
+    }
 
     public static int solveSuperMarketQueue(int[] customers, int n) {
         java.util.PriorityQueue<Integer> queue = new java.util.PriorityQueue<>();
@@ -12,7 +18,7 @@ public class SuperMarketQueue {
         }
 
         // loop until all customer's time is processed
-        for (int time: customers) {
+        for (int time : customers) {
             int minimumTime = queue.poll();
             queue.add(minimumTime + time);
         }

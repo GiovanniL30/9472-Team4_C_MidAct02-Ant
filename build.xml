@@ -12,16 +12,20 @@
         <delete dir="${build.dir}"/>
     </target>
 
-    <!--This will create a classes directory and compile all java files inside the src directory-->
-    <target name ="compile">
+    <target name="make">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${jar.dir}"/>
         <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <!--This will create a classes directory and compile all java files inside the src directory-->
+    <target name ="compile" depends="make">
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
     <!--After the compilation process this will be executed-->
     <!--This creates the jar file with the compiled classes-->
     <target name ="jar" depends="compile">
-        <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
@@ -39,4 +43,50 @@
 
     <!--This will clean the build directory, compile the java files, create a jar file and run the jar file-->
     <target name="main" depends="clean,run"/>
+
+    <target name="run-java" depends="clean, make">
+        <!--  Compile then run agad-->
+        <input message="Enter the file path to compile (relative to src/ e.g. AlgoSolving/SuperMarketQueue.java):" addproperty="file"/>
+
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
+            <include name="${file}"/>
+        </javac>
+
+        <input message="Enter the class to run (e.g., AlgoSolving.SuperMarketQueue):" addproperty="class"/>
+
+        <java classname="${class}" fork="true" dir="${build.dir}">
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+
+    <target name="compile-one" depends="clean, make">
+        <input message="Enter the file path to compile (relative to src/, e.g., AlgoSolving/SuperMarketQueue.java):"
+               addproperty="file"/>
+
+        <input message="Enter the fully qualified main class (e.g., AlgoSolving.SuperMarketQueue):"
+               addproperty="main.class"/>
+
+        <!-- DEBUGGGGGGG -->
+        <echo message="Compiling: ${file}"/>
+        <echo message="Main-Class: ${main.class}"/>
+
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includes="${file}" includeantruntime="false">
+            <classpath>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="create-jar" depends="compile-one">
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run-jar" depends="create-jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
 </project>
