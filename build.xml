@@ -9,12 +9,12 @@
     <property name="main-class" value="Main"/>
 
     <!-- Target to clean the build directory -->
-    <target name="clean">
+    <target name="clean" description="Cleans the entire build directory by removing all compiled files">
         <delete dir="${build.dir}"/>
     </target>
 
     <!-- Target to create necessary build directories -->
-    <target name="make">
+    <target name="make" description="Creates the required directories for building the project">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${jar.dir}"/>
         <mkdir dir="${classes.dir}"/>
@@ -26,7 +26,7 @@
     </target>
 
     <!-- Target to compile a single Java file, with user input -->
-    <target name="compile-one" depends="clean, make">
+    <target name="compile-one" depends="clean, make" description="Compiles a single Java file provided by the user, with input for file path and main class">
         <input message="Enter the file path to compile (relative to src/, e.g., AlgoSolving/SuperMarketQueue.java):"
                addproperty="file"/>
         <input message="Enter the fully qualified main class (e.g., AlgoSolving.SuperMarketQueue):"
@@ -56,7 +56,7 @@
     </target>
 
     <!-- Target to create a JAR for a single compiled file -->
-    <target name="create-jar-single" depends="compile-one">
+    <target name="create-jar-single" depends="compile-one" description="Creates a JAR file for a single compiled file">
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -93,7 +93,7 @@
     </target>
 
     <!-- Target to run the JAR created for a single file -->
-    <target name="run-jar-single" depends="create-jar-single">
+    <target name="run-jar-single" depends="create-jar-single" description="Runs the JAR file created for a single compiled file">
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/> <!-- Run the JAR -->
     </target>
 

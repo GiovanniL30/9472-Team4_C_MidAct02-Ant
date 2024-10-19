@@ -2,8 +2,10 @@ package Processors;
 
 public class StringProcessor {
 
+    /**
+     Converts a string to camel case by adding spaces before uppercase letters
+     */
     public static String camelCase(String input) {
-
         String answer = "";
         for(char c : input.toCharArray()) {
             answer += Character.isUpperCase(c) ? " " + c : c;
@@ -11,6 +13,9 @@ public class StringProcessor {
         return answer;
     }
 
+    /**
+     Masks all but the last four characters of a string with '#' symbol
+     */
     public static String maskify(String str) {
         if (str.length() > 4) {
             int wordLength = str.length() - 4;
@@ -33,8 +38,10 @@ public class StringProcessor {
         return str;
     }
 
+    /**
+     Orders words in a string based on the digits contained within each word
+     */
     public static String order(String words) {
-
         if (words == null || words.isEmpty()) {
             return "";
         }
@@ -50,22 +57,20 @@ public class StringProcessor {
                     break;
                 }
             }
-
         }
-
         return String.join(" ", sortedWords);
     }
 
+    /**
+     Finds the missing letter in a character array
+     */
     public static char findMissingLetter(char[] array){
-
         for(int i = 0; i < array.length; i++) {
 
             if(  ((int)array[i] + 1 ) != ( (int) array[i + 1]) ) {
                 return (char) (array[i + 1] - 1);
             }
-
         }
-
         return ' ';
     }
 

@@ -6,10 +6,10 @@ import java.util.Map;
 public class NumberProcessor {
 
     private static final Map<String, Integer> numbers = new HashMap<>();
-
-
+    /**
+     Returns the last digit of the result of an array of numbers using modulo arithmetic
+     */
     public static int lastDigit(int[] numsArray) {
-        // Base Case
         if (numsArray.length == 0) return 1;
 
         boolean isPreviousZero = false;
@@ -29,11 +29,10 @@ public class NumberProcessor {
         return isPreviousZero ? 1 : trueModulo(numsArray[0], mod4Result, 10);
     }
 
-
-
-
+    /**
+     Returns the sum of numbers in a sequence from start to end with a given step
+     */
     public static int sequenceSum(int start, int end, int step) {
-        // base case
         if (start > end) return 0;
 
         int sum = start;
@@ -46,8 +45,10 @@ public class NumberProcessor {
         return sum;
     }
 
+    /**
+     Returns the highest and lowest numbers in a string of space-separated numbers
+     */
     public static String highAndLow(String numbers) {
-        // Code here or
         String [] nums = numbers.split(" ");
         int min = Integer.parseInt(nums[0]);
         int max = min;
@@ -62,6 +63,9 @@ public class NumberProcessor {
         return max + " " + min;
     }
 
+    /**
+     Returns an array containing two Fibonacci numbers whose product is closest to the given product
+     */
     public static long[] productFib(long prod) {
         long firstSeq = 0, secondSeq = 1, nextSeq;
 
@@ -70,15 +74,13 @@ public class NumberProcessor {
             firstSeq = secondSeq;
             secondSeq = nextSeq;
         }
-
         return new long[]{firstSeq, secondSeq, firstSeq * secondSeq == prod ? 1 : 0};
-
     }
 
+    /**
+     Returns the maximum sum of a consecutive subsequence in the given array
+     */
     public static int sequence(int[] arr) {
-
-        // using Kadane's Algorithm
-
         int max = 0;
         int total = 0;
 
@@ -91,8 +93,10 @@ public class NumberProcessor {
         return max;
     }
 
+    /**
+     Returns the sum of two integers as a binary string
+     */
     public static String binaryAddition(int a, int b){
-
         int sum = a + b;
 
         StringBuilder answer = new StringBuilder("");
@@ -101,13 +105,14 @@ public class NumberProcessor {
             answer.append(sum % 2);
             sum /= 2;
         }
-
-
         return answer.reverse().toString();
     }
 
+    /**
+     Returns the digital root of a given number (sum of digits until a
+     single digit is obtained)
+     */
     public static int digital_root(int n) {
-
         if(n < 10) return n;
 
         int temp = n;
@@ -117,21 +122,19 @@ public class NumberProcessor {
             total += temp % 10;
             temp = temp / 10;
         }
-
         return digital_root(total);
-
     }
 
+    /**
+     Returns the unique number in an array where all other numbers are the same
+     */
     public static double findUniq(double[] arr) {
-
         if (arr[0] != arr[1]) {
-
             if (arr[0] != arr[2]) {
                 return arr[0];
             } else {
                 return arr[1];
             }
-
         }
 
         double commonValue = arr[0];
@@ -141,22 +144,20 @@ public class NumberProcessor {
                 return arr[i];
             }
         }
-
         throw new IllegalArgumentException("Array does not contain exactly one unique element.");
     }
 
+    /**
+     Parses a number string into an integer (e.g. "one hundred twenty-three" -> 123)
+     */
     public static int parseInt(String numStr) {
         populateMap();
         String[] nums = numStr.replaceAll(" and", "").split("[ -]");
         int result = 0, currentValue = 0;
 
-
-
-
         for (String index: nums) {
             if (numbers.containsKey(index)) {
                 int mapValue = numbers.get(index);
-
 
                 if (mapValue == 100) {
                     currentValue *= mapValue;
@@ -167,13 +168,14 @@ public class NumberProcessor {
                 } else {
                     currentValue += mapValue;
                 }
-
             }
         }
-        // Your code here!
         return result + currentValue;
     }
 
+    /**
+    Populates a map with number words and their corresponding integer values
+     */
     private static void populateMap() {
         numbers.put("zero" , 0);
         numbers.put("one" , 1);
@@ -210,6 +212,7 @@ public class NumberProcessor {
         numbers.put("million" , 1000000);
     }
 
+    // Computes the correct modulo of a number based on exponentiation rules
     private static int trueModulo(int base, int exp, int mod) {
         int baseModulus = base % mod;
         int exponent = (exp + 3) % 4;
