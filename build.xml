@@ -21,7 +21,7 @@
     </target>
 
     <!-- Target to compile all Java source files -->
-    <target name="compile-all" depends="make">
+    <target name="compile-all" depends="make" description="Compiles all Java source files in the sources directory into classes directory">
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
@@ -39,7 +39,7 @@
     </target>
 
     <!-- Target to generate Javadocs -->
-    <target name="create-doc">
+    <target name="create-doc" description="Generates Javadocs for specified packages and saves them">
         <javadoc packagenames="AlgoSolving.*, Calculators.*, Processors.*" sourcepath="${src.dir}"
                  destdir="${build.dir}/doc" version="true" windowtitle="CodeWars Solutions">
             <doctitle>CodeWars Solutions</doctitle>
@@ -47,7 +47,7 @@
     </target>
 
     <!-- Target to create a JAR with all compiled classes -->
-    <target name="create-jar-all" depends="compile-all">
+    <target name="create-jar-all" depends="compile-all" description="Creates a JAR file containing all compiled classes">
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
@@ -65,23 +65,23 @@
     </target>
 
     <!-- Target to create a JAR for generated Javadocs -->
-    <target name="create-jar-doc" depends="create-doc, create-jar-all">
+    <target name="create-jar-doc" depends="create-doc, create-jar-all" description="Creates a JAR file containing the generated Javadocs">
         <jar destfile="${jar.dir}/doc.jar" basedir="${build.dir}/doc"/>
     </target>
 
     <!-- Target to run the application after compiling and packaging -->
-    <target name="run" depends="create-jar-all, create-doc, create-jar-doc">
+    <target name="run" depends="create-jar-all, create-doc, create-jar-doc" description="Runs the application after creating JAR files and generating documentation">
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
     </target>
 
     <!-- Target to clean and build the entire project -->
-    <target name="clean-build" depends="clean, create-jar-all"/>
+    <target name="clean-build" depends="clean, create-jar-all" description="Cleans the build directory and build the entire project by creating the JAR file"/>
 
     <!-- Main target: clean, compile, create JARs, generate docs, and run the application -->
-    <target name="main" depends="clean, run"/>
+    <target name="main" depends="clean, run" description="Cleans the build directory, compiles the project, create JARs generate documentation and run the application"/>
 
     <!-- Target to compile and run a specific Java file, with user input -->
-    <target name="run-java" depends="clean, make">
+    <target name="run-java" depends="clean, make" description="Compiles a specific Java file provided by the user and runs the specified main class">
         <input message="Enter the file path to compile (relative to src/ e.g. AlgoSolving/SuperMarketQueue.java):" addproperty="file"/>
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
             <include name="${file}"/>
