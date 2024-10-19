@@ -6,7 +6,6 @@ public class GravitationalForceCalculator {
 
     public static final double G = 6.67 * Math.pow(10, -11);
     public static double solution(double[] arrVal, String[] arrUnit) {
-        // TODO
         Map<String, Double> mass = Map.of(
                 "kg", 1.0,
                 "g", Math.pow(10, -3),

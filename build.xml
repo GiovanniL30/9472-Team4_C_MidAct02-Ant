@@ -1,32 +1,36 @@
 <?xml version = "1.0" encoding="UTF-8"?>
-<project name = "9472-Team4_C_MidAct02-Ant" basedir="." default="main">
-    <property name ="src.dir" value="src"/>
-    <property name ="build.dir" value="build"/>
-    <property name ="classes.dir" value="${build.dir}/classes"/>
-    <property name ="jar.dir" value="${build.dir}/jar"/>
-    <property name ="main-class" value="Main"/>
+<project name="9472-Team4_C_MidAct02-Ant" basedir="." default="main">
 
-    <target name ="clean">
+    <!-- Define project properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir" value="${build.dir}/jar"/>
+    <property name="main-class" value="Main"/>
+
+    <!-- Target to clean the build directory -->
+    <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
 
+    <!-- Target to create necessary build directories -->
     <target name="make">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${jar.dir}"/>
         <mkdir dir="${classes.dir}"/>
     </target>
 
-    <target name ="compile-all" depends="make">
+    <!-- Target to compile all Java source files -->
+    <target name="compile-all" depends="make">
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
+    <!-- Target to compile a single Java file, with user input -->
     <target name="compile-one" depends="clean, make">
         <input message="Enter the file path to compile (relative to src/, e.g., AlgoSolving/SuperMarketQueue.java):"
                addproperty="file"/>
-
         <input message="Enter the fully qualified main class (e.g., AlgoSolving.SuperMarketQueue):"
                addproperty="main.class"/>
-
         <javac srcdir="${src.dir}" destdir="${classes.dir}" includes="${file}" includeantruntime="false">
             <classpath>
                 <pathelement location="${classes.dir}"/>
@@ -34,6 +38,7 @@
         </javac>
     </target>
 
+    <!-- Target to generate Javadocs -->
     <target name="create-doc">
         <javadoc packagenames="AlgoSolving.*, Calculators.*, Processors.*" sourcepath="${src.dir}"
                  destdir="${build.dir}/doc" version="true" windowtitle="CodeWars Solutions">
@@ -41,7 +46,8 @@
         </javadoc>
     </target>
 
-    <target name ="create-jar-all" depends="compile-all">
+    <!-- Target to create a JAR with all compiled classes -->
+    <target name="create-jar-all" depends="compile-all">
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
@@ -49,6 +55,7 @@
         </jar>
     </target>
 
+    <!-- Target to create a JAR for a single compiled file -->
     <target name="create-jar-single" depends="compile-one">
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
@@ -57,35 +64,37 @@
         </jar>
     </target>
 
-    <target name ="create-jar-doc" depends="create-doc, create-jar-all">
-        <jar destfile="${jar.dir}/doc.jar" basedir="${build.dir}/doc">
-        </jar>
+    <!-- Target to create a JAR for generated Javadocs -->
+    <target name="create-jar-doc" depends="create-doc, create-jar-all">
+        <jar destfile="${jar.dir}/doc.jar" basedir="${build.dir}/doc"/>
     </target>
 
-    <target name ="run" depends ="create-jar-all, create-doc, create-jar-doc">
+    <!-- Target to run the application after compiling and packaging -->
+    <target name="run" depends="create-jar-all, create-doc, create-jar-doc">
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
     </target>
 
+    <!-- Target to clean and build the entire project -->
     <target name="clean-build" depends="clean, create-jar-all"/>
 
+    <!-- Main target: clean, compile, create JARs, generate docs, and run the application -->
     <target name="main" depends="clean, run"/>
 
+    <!-- Target to compile and run a specific Java file, with user input -->
     <target name="run-java" depends="clean, make">
-
         <input message="Enter the file path to compile (relative to src/ e.g. AlgoSolving/SuperMarketQueue.java):" addproperty="file"/>
-
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
             <include name="${file}"/>
         </javac>
-
         <input message="Enter the class to run (e.g., AlgoSolving.SuperMarketQueue):" addproperty="class"/>
-
         <java classname="${class}" fork="true" dir="${build.dir}">
             <classpath path="${build.dir}"/>
         </java>
     </target>
 
+    <!-- Target to run the JAR created for a single file -->
     <target name="run-jar-single" depends="create-jar-single">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/> <!-- Run the JAR -->
     </target>
+
 </project>

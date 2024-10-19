@@ -1,6 +1,7 @@
 package AlgoSolving;
 
 public class SuperMarketQueue {
+
     public static void main(String[] args) {
         System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 3, 3, 4, 4}, 2));
         System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{5, 2, 3, 3, 4, 4}, 2));
