@@ -1,4 +1,4 @@
-# README: Apache Ant Build Commands for Project 9472-Team4_C_MidAct02-Ant
+# Apache Ant Build Commands
 
 This project uses Apache Ant as a build tool to manage compilation, documentation generation, and execution of Java programs. Below are the available commands you can use with Ant.
 
