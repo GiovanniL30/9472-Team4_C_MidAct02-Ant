@@ -8,18 +8,6 @@ package AlgoSolving;
  */
 public class SuperMarketQueue {
 
-    /**
-     * Main method to test the {@code solveSuperMarketQueue} function with different customer queues and counter numbers.
-     *
-     * @param args The input arguments (not used).
-     */
-    public static void main(String[] args) {
-        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 3, 3, 4, 4}, 2));
-        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{5, 2, 3, 3, 4, 4}, 2));
-        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 5, 3, 3, 4, 4}, 3));
-        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 5, 3, 4, 5}, 3));
-        System.out.println(SuperMarketQueue.solveSuperMarketQueue(new int[]{2, 2, 3, 3, 5, 4}, 30));
-    }
 
     /**
      * Solves the supermarket queue problem by calculating the total time taken to serve all customers
